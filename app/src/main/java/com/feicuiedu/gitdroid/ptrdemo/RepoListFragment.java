@@ -47,7 +47,7 @@ public class RepoListFragment extends Fragment implements PtrPageView {
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        presenter = new ReopListPresenter(this,this);
+        presenter = new ReopListPresenter(this);
         //
         adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1);
         listView.setAdapter(adapter);
@@ -65,12 +65,10 @@ public class RepoListFragment extends Fragment implements PtrPageView {
                 Toast.makeText(getContext(), "loadmore", Toast.LENGTH_SHORT).show();
                 presenter.loadMore();
             }
-
             // 是否正在加载，此方法用来避免重复加载
             @Override public boolean isLoading() {
                 return listView.getFooterViewsCount() > 0 && footerView.isLoading();
             }
-
             // 是否所有数据都已加载
             @Override public boolean hasLoadedAllItems() {
                 return listView.getFooterViewsCount() > 0 && footerView.isComplete();
