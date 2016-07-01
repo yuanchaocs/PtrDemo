@@ -26,4 +26,6 @@ dependencies {
     //
     compile 'in.srain.cube:ultra-ptr:1.0.11'
     compile 'com.jakewharton:butterknife:7.0.1'
+    // ListView
+    compile 'com.vinaysshenoy:mugen:1.0.2'
 }
