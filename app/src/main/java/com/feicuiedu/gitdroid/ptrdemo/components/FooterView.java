@@ -1,4 +1,4 @@
-package com.feicuiedu.gitdroid.ptrdemo;
+package com.feicuiedu.gitdroid.ptrdemo.components;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.feicuiedu.gitdroid.ptrdemo.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

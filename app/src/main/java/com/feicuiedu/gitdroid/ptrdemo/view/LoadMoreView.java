@@ -1,4 +1,4 @@
-package com.feicuiedu.gitdroid.ptrdemo;
+package com.feicuiedu.gitdroid.ptrdemo.view;
 
 /**
  * Created by Administrator on 2016/7/1 0001.

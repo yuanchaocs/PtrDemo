@@ -11,6 +11,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.feicuiedu.gitdroid.ptrdemo.components.FooterView;
+import com.feicuiedu.gitdroid.ptrdemo.view.LoadMoreView;
+import com.feicuiedu.gitdroid.ptrdemo.view.PtrView;
 import com.mugen.Mugen;
 import com.mugen.MugenCallbacks;
 
@@ -25,7 +28,7 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
-//              https://github.com/yuanchaocs/PtrDemo.git
+//     https://github.com/yuanchaocs/PtrDemo.git
 
 public class RepoListFragment extends Fragment implements PtrView<List<String>>, LoadMoreView<List<String>> {
 

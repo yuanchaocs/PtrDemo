@@ -1,4 +1,4 @@
-package com.feicuiedu.gitdroid.ptrdemo;
+package com.feicuiedu.gitdroid.ptrdemo.view;
 
 /**
  * 下拉刷新视图抽象接口
