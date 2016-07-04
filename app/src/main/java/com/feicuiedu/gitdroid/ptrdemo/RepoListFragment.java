@@ -2,7 +2,6 @@ package com.feicuiedu.gitdroid.ptrdemo;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import android.widget.Toast;
 
 import com.feicuiedu.gitdroid.ptrdemo.components.FooterView;
 import com.feicuiedu.gitdroid.ptrdemo.view.PtrPageView;
+import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import com.mugen.Mugen;
 import com.mugen.MugenCallbacks;
 
@@ -27,7 +27,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 
 //     https://github.com/yuanchaocs/PtrDemo.git
 
-public class RepoListFragment extends Fragment implements PtrPageView {
+public class RepoListFragment extends MvpFragment<PtrPageView,ReopListPresenter> implements PtrPageView {
 
     @Bind(R.id.ptrClassicFrameLayout) PtrClassicFrameLayout ptrFrameLayout;
     @Bind(R.id.lvRepos) ListView listView;
@@ -38,23 +38,24 @@ public class RepoListFragment extends Fragment implements PtrPageView {
 
     private FooterView footerView; // 上拉加载更多的视图
 
-    private ReopListPresenter presenter;
-
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_repo_list, container, false);
+    }
+
+    @Override public ReopListPresenter createPresenter() {
+        return new ReopListPresenter();
     }
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        presenter = new ReopListPresenter(this);
         //
         adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1);
         listView.setAdapter(adapter);
         // 下拉刷新
         ptrFrameLayout.setPtrHandler(new PtrDefaultHandler() {
             @Override public void onRefreshBegin(PtrFrameLayout frame) {
-                presenter.loadData();
+                getPresenter().loadData();
             }
         });
 
@@ -63,7 +64,7 @@ public class RepoListFragment extends Fragment implements PtrPageView {
         Mugen.with(listView, new MugenCallbacks() {
             @Override public void onLoadMore() {
                 Toast.makeText(getContext(), "loadmore", Toast.LENGTH_SHORT).show();
-                presenter.loadMore();
+                getPresenter().loadMore();
             }
             // 是否正在加载，此方法用来避免重复加载
             @Override public boolean isLoading() {

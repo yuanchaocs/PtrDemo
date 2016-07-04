@@ -3,6 +3,7 @@ package com.feicuiedu.gitdroid.ptrdemo;
 import android.os.AsyncTask;
 
 import com.feicuiedu.gitdroid.ptrdemo.view.PtrPageView;
+import com.hannesdorfmann.mosby.mvp.MvpNullObjectBasePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +19,15 @@ import java.util.Random;
  * Fragment在做视图工作 (实现了PtrPageView视图接口, 也就是下拉和上拉功能视图接口)
  * <p/>
  * Presenter里做了具体要做的业务(下拉刷新获取数据, 上拉加载更多数据), 以及视图的触发
+ *
+ *
+ * 直接使用MVP库 Mosby库
+ * 让你的应用简单清晰的使用MVP架构方式来进行构建开发
+ *
+ * 依赖  mosby
+ *
  */
-public class ReopListPresenter {
-    private PtrPageView pageView;
-
-    public ReopListPresenter(PtrPageView pageView) {
-        this.pageView = pageView;
-    }
+public class ReopListPresenter extends MvpNullObjectBasePresenter<PtrPageView>{
 
     // 这是下拉刷新视图层的业务逻辑-----------------------------------------------------------
     public void loadData() {
@@ -59,20 +62,20 @@ public class ReopListPresenter {
             int size = datas.size();
             // 模似空数据时的(视图)情况
             if (size == 0) {
-                pageView.showEmptyView(); // listview不可见了,空的textview可见了
+                getView().showEmptyView(); // listview不可见了,空的textview可见了
             }
             // 模似错误数据时的(视图)情况
             else if (size == 1) {
-                pageView.showErroView("unkown erro"); // listview不可见了,空的textview不可见了,错误的textview可见了
+                getView().showErroView("unkown erro"); // listview不可见了,空的textview不可见了,错误的textview可见了
             }
             // 模似正常获取到了数据的(视图)情况
             else {
-                pageView.showContentView(); // 显示内容视图(让listview能显示)
+                getView().showContentView(); // 显示内容视图(让listview能显示)
                 // 视图进行数据刷新
-                pageView.refreshData(datas);
+                getView().refreshData(datas);
             }
             // 停至结束这次下拉刷新
-            pageView.stopRefresh();
+            getView().stopRefresh();
         }
     }
 
@@ -81,7 +84,7 @@ public class ReopListPresenter {
         @Override protected void onPreExecute() {
             super.onPreExecute();
             // 显示加载中...
-            pageView.showLoadMoreLoading();
+            getView().showLoadMoreLoading();
         }
 
         @Override protected List<String> doInBackground(Void... params) {
@@ -101,9 +104,9 @@ public class ReopListPresenter {
         @Override protected void onPostExecute(List<String> datas) {
             super.onPostExecute(datas);
             // 将加载到的数据添加到视图上
-            pageView.addMoreData(datas);
+            getView().addMoreData(datas);
             // 隐藏加载中....
-            pageView.hideLoadMore();
+            getView().hideLoadMore();
         }
     }
 }
